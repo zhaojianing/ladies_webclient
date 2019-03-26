@@ -3,7 +3,7 @@
     <div class="header content">
       <img class="header-logo" :src="srcImg" alt="LOGO">
       <nuxt-link class="header-link" :to="{name:'index'}">首页</nuxt-link>
-      <nuxt-link class="header-link" :to="{name:'index'}">标签</nuxt-link>
+      <nuxt-link class="header-link" :to="{name:'asyncData'}">标签</nuxt-link>
       <nuxt-link class="header-link" :to="{name:'index'}">归档</nuxt-link>
       <nuxt-link class="header-link" :to="{name:'index'}">留言</nuxt-link>
       <div class="header-inner">

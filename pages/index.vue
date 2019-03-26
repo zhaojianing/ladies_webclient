@@ -34,10 +34,10 @@ export default {
     line-height: 34px;
     text-align: center;
     color: font_color;
-    background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0), #26262d, rgba(0, 0, 0, 0)); /* Safari 5.1 - 6.0 */
-    background: -o-linear-gradient(right, rgba(0, 0, 0, 0), #26262d, rgba(0, 0, 0, 0)); /* Opera 11.1 - 12.0 */
-    background: -moz-linear-gradient(right, rgba(0, 0, 0, 0), #26262d, rgba(0, 0, 0, 0)); /* Firefox 3.6 - 15 */
-    background: linear-gradient(to right, rgba(0, 0, 0, 0), #26262d, rgba(0, 0, 0, 0)); /* 标准的语法 */
+    background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0), theme_bgc, rgba(0, 0, 0, 0)); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(right, rgba(0, 0, 0, 0), theme_bgc, rgba(0, 0, 0, 0)); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(right, rgba(0, 0, 0, 0), theme_bgc, rgba(0, 0, 0, 0)); /* Firefox 3.6 - 15 */
+    background: linear-gradient(to right, rgba(0, 0, 0, 0), theme_bgc, rgba(0, 0, 0, 0)); /* 标准的语法 */
   }
 
   .container-col {
