@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="async">
         <p>{{ name }}</p>
         <h1>
             {{ info.name }}
@@ -28,3 +28,12 @@ export default {
     }
 }
 </script>
+
+<style lang="stylus" scoped>
+@import '~@/assets/style/init';
+.async {
+    color font_color
+    text-align center
+}
+</style>
+
