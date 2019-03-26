@@ -45,7 +45,7 @@ export default {
     position absolute
     top 0
     width 100%
-    height calc(100% - 100px)
+    height calc(100% - 80px)
     background-repeat no-repeat
     background-size cover
     background-position 50% 50%
