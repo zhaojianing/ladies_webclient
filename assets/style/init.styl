@@ -1,0 +1,61 @@
+@import '~assets/style/color'
+html,body,p {
+    margin 0 !important
+    padding 0    
+    height 100%
+    .clear-margin {
+        margin 0    
+    }
+    .clear-padding {
+        padding 0    
+    }
+}
+
+// 自定义滚动条
+::-webkit-scrollbar {
+    width 4px
+    height 4px
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background theme_bgc
+    border-radius 8px
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background font_color
+    border-radius 8px
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background rgb(162, 162, 163)
+}
+
+// 头部样式替换
+.header-inner .el-input__inner,.header-inner  .el-input-group__append{
+    height 32px !important
+    // border 1px solid rgba(#282c35,0.6) !important
+    background-color: #1a1a1a
+    border-color #1a1a1a
+    color: #aaa
+    font-size: 16px; 
+}
+.header-inner  .el-input-group__append,.header-inner  .el-input-group__prepend {
+    border none    
+}
+.header-inner .el-input-group {
+    border-radius 10px    
+}
+.header-inner .el-input.is-active .el-input__inner,.header-inner .el-input__inner:focus {
+    border-color #1a1a1a
+}
+// content 部分
+
+
+// 底部样式替换
+// .el-main {
+//     padding 300px 0 0 0     
+// }
