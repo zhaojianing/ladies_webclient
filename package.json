@@ -5,10 +5,10 @@
   "author": "Yishan-Qiu",
   "private": true,
   "scripts": {
-    "dev": "nuxt --version && nuxt",
-    "build": "nuxt --version && nuxt build",
-    "start": "nuxt --version && nuxt start",
-    "generate": "nuxt --version && nuxt generate",
+    "dev": "nuxt",
+    "build": "nuxt build && npm start",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
     "test": "jest"
   },
   "config": {

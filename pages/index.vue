@@ -39,7 +39,7 @@
         </div>
       </el-col>
       <el-col :xs="0" :sm="10" :md="8" :lg="6" :xl="4">
-        <div class="font_color container-bg right-style">a</div>
+        <div class="font_color container-bg right-style"></div>
       </el-col>
       <el-col :xs="0" :sm="1" :md="1" :lg="2" :xl="5">
         <div>&nbsp;</div>
