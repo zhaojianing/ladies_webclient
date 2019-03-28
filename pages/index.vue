@@ -9,33 +9,33 @@
         <div>&nbsp;</div>
       </el-col>
       <el-col class="container-col" :xs="24" :sm="12" :md="14" :lg="14" :xl="10">
-        <div class="font_color container-bg leaft-style">
-          <div class="container-titleBox">
-            <h3 class="container-title container-init">建站首篇</h3>
-          </div>
-          <div class="container-content">
-            <div class="container-imgBox">
-              <img src="~/assets/images/green.png" alt="Image">
+        <div  v-for="item in article" :key="item.id" class="font_color container-bg leaft-style">
+            <div class="container-titleBox">
+              <h3 class="container-title container-init">{{ item.title }}</h3>
             </div>
-            <p class="container-mark">第一篇文章</p>
-          </div>
-          <div class="container-statistical">
-            <div class="container-left container-init">
-              <div class="container-type container-init">WEB</div>
-              <div class="container-class container-init">原创</div>
+            <div class="container-content">
+              <div class="container-imgBox">
+                <img src="~/assets/images/green.png" alt="Image">
+              </div>
+              <p class="container-mark">{{ item.comments }}</p>
             </div>
+            <div class="container-statistical">
+              <div class="container-left container-init">
+                <div class="container-type container-init">{{ item.class }}</div>
+                <div class="container-class container-init">{{ item.type }}</div>
+              </div>
 
-            <div class="container-right container-init">
-              <i class="el-icon-time"></i>
-              <span class="container-mg">2019-03-26</span>
-              <i class="el-icon-edit"></i>
-              <span class="container-mg">shanYi</span>
-              <i class="el-icon-view"></i>
-              <span class="container-mg">3</span>
-              <i class="el-icon-tickets"></i>
-              <span class="container-mg">0条</span>
+              <div class="container-right container-init">
+                <i class="el-icon-time"></i>
+                <span class="container-mg">{{ item.createdAt }}</span>
+                <i class="el-icon-edit"></i>
+                <span class="container-mg">{{ item.author }}</span>
+                <i class="el-icon-view"></i>
+                <span class="container-mg">{{ item.watch_length }}</span>
+                <i class="el-icon-tickets"></i>
+                <span class="container-mg">{{ item.describe }} 条</span>
+              </div>
             </div>
-          </div>
         </div>
       </el-col>
       <el-col :xs="0" :sm="10" :md="8" :lg="6" :xl="4">
@@ -49,8 +49,25 @@
 </template>
 
 <script>
+// import { ArticleList } from "@/components/common"
 export default {
-  components: {}
+  data() {
+    return {
+      article: "空"
+    };
+  },
+  mounted() {
+    this.initLoad();
+  },
+  methods: {
+    async initLoad() {
+      let res = await this.$axios.get("article/1");
+      this.article = res.data.data;
+    }
+  },
+  components: {
+    // ArticleList
+  }
 };
 </script>
 
@@ -91,22 +108,23 @@ export default {
         }
 
         .container-type {
-            height 20px
-            background-color rgba(tag_bgc,0.36)
-            color rgba(font_color,0.8)
-            padding 2px 6px
-            font-size 12px
-            line-height 20px
-            border-radius 4px
+          height: 20px;
+          background-color: rgba(tag_bgc, 0.36);
+          color: rgba(font_color, 0.8);
+          padding: 2px 6px;
+          font-size: 12px;
+          line-height: 20px;
+          border-radius: 4px;
         }
+
         .container-class {
-            height 20px
-            background-color rgba(tag_mybgc,0.36)
-            color rgba(tag_mycolor,0.87)
-            padding 2px 6px
-            font-size 12px
-            line-height 20px
-            border-radius 4px
+          height: 20px;
+          background-color: rgba(tag_mybgc, 0.36);
+          color: rgba(tag_mycolor, 0.87);
+          padding: 2px 6px;
+          font-size: 12px;
+          line-height: 20px;
+          border-radius: 4px;
         }
 
         .container-left {
@@ -114,7 +132,7 @@ export default {
         }
 
         .container-right {
-            float right
+          float: right;
           text-align: right;
         }
 
