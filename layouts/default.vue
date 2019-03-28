@@ -42,9 +42,10 @@ export default {
   }
 
   #particles {
-    position absolute
+    position fixed
     top 0
     width 100%
+    // height 1080px
     height calc(100% - 80px)
     background-repeat no-repeat
     background-size cover

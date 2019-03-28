@@ -16,6 +16,10 @@ export default {
         content: 'width=device-width, initial-scale=1'
       },
       {
+        name: 'baidu-site-verification',
+        content: 'P2PJdvvcN4'
+      },
+      {
         hid: 'description',
         name: 'description',
         content: pkg.description

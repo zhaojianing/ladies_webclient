@@ -15,7 +15,8 @@
             </div>
             <div class="container-content">
               <div class="container-imgBox">
-                <img src="~/assets/images/green.png" alt="Image">
+                <img :src="item.img_url" alt="Image">
+                <!-- <img src="../assets/images/ceshi.jpg" alt="Image"> -->
               </div>
               <p class="container-mark">{{ item.comments }}</p>
             </div>

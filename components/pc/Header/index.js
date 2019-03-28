@@ -2,7 +2,7 @@ const data = () => {
   return {
     active: null,
     headerSearch: '',
-    srcImg: require('~/assets/images/green.png'),
+    srcImg: require('~/assets/img/green.png'),
     search: "",
   };
 }
