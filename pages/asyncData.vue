@@ -4,6 +4,7 @@
         <h1>
             {{ info.name }}
         </h1>
+        <div id="container"></div>
     </div>
 </template>
 
@@ -25,7 +26,8 @@ export default {
     async asyncData() {
         let {data} = await axios.get('https://api.myjson.com/bins/tkeke');
         return {info: data}
-    }
+    },
+    mounted()  {}
 }
 </script>
 

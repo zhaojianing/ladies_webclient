@@ -1,4 +1,6 @@
 @import '~assets/style/color'
+@import '~assets/style/keyframes'
+
 html,body {
     margin 0 !important
     padding 0    
@@ -15,11 +17,17 @@ html,body {
 body>div,body>div>div {
     height 100%
 }
-h3,p,ul,li {
+h3,p,ul,li,a {
     margin 0
     padding 0
     list-style none
+    color font_color
+    text-decoration none
 }
+
+// 背景色鼠标
+::-moz-selection{background:#93C; color:#FCF;}
+::selection {background:#93C; color:#FCF;}
 
 // 自定义滚动条
 ::-webkit-scrollbar {
