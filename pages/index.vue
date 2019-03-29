@@ -9,6 +9,7 @@
         <div>&nbsp;</div>
       </el-col>
       <el-col class="container-col" :xs="24" :sm="12" :md="14" :lg="14" :xl="10">
+        <!-- 文章部分 -->
         <div  v-for="item in article" :key="item.id" class="font_color container-bg leaft-style">
             <div class="container-titleBox">
               <h3 class="container-title container-init">{{ item.title }}</h3>
@@ -40,7 +41,10 @@
         </div>
       </el-col>
       <el-col :xs="0" :sm="10" :md="8" :lg="6" :xl="4">
-        <div class="font_color container-bg right-style"></div>
+        <!-- 右侧组件 -->
+        <!-- <div class="font_color container-bg right-style"></div> -->
+        <NewList></NewList>
+        <Friends></Friends>
       </el-col>
       <el-col :xs="0" :sm="1" :md="1" :lg="2" :xl="5">
         <div>&nbsp;</div>
@@ -50,7 +54,7 @@
 </template>
 
 <script>
-// import { ArticleList } from "@/components/common"
+import { NewList,Friends } from "@/components/common"
 export default {
   data() {
     return {
@@ -67,7 +71,8 @@ export default {
     }
   },
   components: {
-    // ArticleList
+    NewList,
+    Friends
   }
 };
 </script>
@@ -179,7 +184,7 @@ export default {
   }
 
   .container-bg {
-    background-color: rgba(#26262d, 0.6);
+    background-color: rgba(theme_bgc, 0.6);
     height: 180px;
     border-radius: 10px;
   }

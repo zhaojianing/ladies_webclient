@@ -20,6 +20,14 @@ export default {
         content: 'P2PJdvvcN4'
       },
       {
+        name: 'keywords',
+        content: '易山博客,前端博客,个人博客,前端开发,博客,前端个人博客,源码分享,技术博客，shanYi博客,shanyi博客,博客'
+      },
+      {
+        name: 'description',
+        content: '易山博客是一个分享技术教程，共享资源， 前端开发者交流的个人独立博客。'
+      },
+      {
         hid: 'description',
         name: 'description',
         content: pkg.description

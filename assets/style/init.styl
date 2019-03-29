@@ -12,9 +12,13 @@ html,body {
         padding 0    
     }
 }
-h3,p {
+body>div,body>div>div {
+    height 100%
+}
+h3,p,ul,li {
     margin 0
     padding 0
+    list-style none
 }
 
 // 自定义滚动条
@@ -59,7 +63,16 @@ h3,p {
     border-color #1a1a1a
 }
 // content 部分
-
+.el-row {
+    margin 0  !important;
+}
+// 归档部分
+.el-timeline-item__node,.el-timeline-item__tail {
+    background-color: font_color;
+}
+.el-timeline-item__tail {
+    border-left 2px solid font_color
+}
 
 // 底部样式替换
 // .el-main {

@@ -32,10 +32,12 @@ export default {
 .default-box {
   position relative
   z-index 1
+  height 100%
 
   .content {
     padding 0
     display block
+    min-height calc(100% - 280px)
     width 100%
     margin 0 auto
     background-color content_bgc
@@ -46,7 +48,7 @@ export default {
     top 0
     width 100%
     // height 1080px
-    height calc(100% - 80px)
+    height 100%
     background-repeat no-repeat
     background-size cover
     background-position 50% 50%

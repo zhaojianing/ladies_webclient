@@ -1,11 +1,12 @@
 // -- NAME --
 
-const name = 'ArticleList';
+const name = 'newList';
 
 // -- DATA --
 
 const data = {
-  article: '空'
+  title: '',
+  index: 1
 };
 
 // -- COMPUTED --
@@ -27,16 +28,16 @@ const watch = {
 // -- METHODS --
 
 const methods = {
-  async initLoad(app) {
-    let res = await app.$axios.get('article/1');
-    data.article = res.data.data;
-  }
+    async loadTitle (app) {
+        let res = await app.$axios.get("article/1");
+        data.title = res.data.data;
+    }
 };
 
 // -- HOOKS --
 
 function mounted() {
-  methods.initLoad(this);
+  methods.loadTitle(this);
 }
 
 // == EXPORT ==
