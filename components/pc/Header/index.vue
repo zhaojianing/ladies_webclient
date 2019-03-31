@@ -1,7 +1,7 @@
 <template>
   <header class="header-box">
     <div class="header content">
-      <img class="header-logo" :src="srcImg" alt="LOGO">
+      <nuxt-link class="header-link" :to="{name:'index'}"><img class="header-logo" :src="srcImg" alt="LOGO"></nuxt-link>
       <nuxt-link class="header-link" :to="{name:'index'}">首页</nuxt-link>
       <nuxt-link class="header-link" :to="{name:'asyncData'}">标签</nuxt-link>
       <nuxt-link class="header-link" :to="{name:'timeline'}">归档</nuxt-link>

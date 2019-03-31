@@ -3,17 +3,20 @@
     <el-row :gutter="20">
       <div class="notice">
         <i class="el-icon-bell"></i>
-        <span>： 学历有时候很重要，可我没有（求职中...）-> email: zjn8752@163.com</span>
+        <span>： 大学未遂求职人员：email: zjn8752@163.com</span>
       </div>
-      <el-col :xs="0" :sm="1" :md="1" :lg="2" :xl="5">
+      <el-col :xs="0" :sm="1" :md="1" :lg="4" :xl="5">
         <div>&nbsp;</div>
       </el-col>
-      <el-col class="container-col" :xs="24" :sm="12" :md="14" :lg="14" :xl="10">
+      <el-col class="container-col" :xs="24" :sm="12" :md="14" :lg="12" :xl="10">
         <!-- 文章部分 -->
         <div v-for="item in article" :key="item.id" class="font_color container-bg leaft-style">
-          <div class="container-titleBox">
-            <h3 class="container-title container-init">{{ item.title }}</h3>
-          </div>
+          <!-- <router-link :to="`/article-details/${item.id}`"> -->
+          <router-link :to="{name:'article-details',params:{id:`${item.id}`,num:`${item.watch_length}`}}">
+            <div class="container-titleBox">
+              <h3 class="container-title container-init">{{ item.title }}</h3>
+            </div>
+          </router-link>
           <div class="container-content">
             <div class="container-imgBox">
               <img :src="item.img_url" alt="Image">
@@ -24,38 +27,33 @@
           <div class="container-statistical">
             <div class="container-left container-init">
               <div class="container-type container-init">
-				  <router-link :to="{name:'asyncData'}">
-					  {{ item.class }}
-				  </router-link>
-				  
-				</div>
+                <router-link :to="{name:'asyncData'}">{{ item.class }}</router-link>
+              </div>
               <div class="container-class container-init">
-				  <router-link :to="{name:'asyncData'}">
-					  {{ item.type }}
-				  </router-link>
-			  </div>
+                <router-link :to="{name:'asyncData'}">{{ item.type }}</router-link>
+              </div>
             </div>
 
             <div class="container-right container-init">
               <i class="el-icon-time"></i>
               <span class="container-mg">{{ item.createdAt }}</span>
-              <i class="el-icon-edit"></i>
-              <span class="container-mg">{{ item.author }}</span>
-              <i class="el-icon-view"></i>
-              <span class="container-mg">{{ item.watch_length }}</span>
-              <i class="el-icon-tickets"></i>
-              <span class="container-mg">{{ item.describe }} 条</span>
+              <i class="el-icon-edit hidden-xs-only"></i>
+              <span class="container-mg hidden-xs-only">{{ item.author }}</span>
+              <i class="el-icon-view hidden-xs-only"></i>
+              <span class="container-mg hidden-xs-only">{{ item.watch_length }}</span>
+              <i class="el-icon-tickets hidden-xs-only"></i>
+              <span class="container-mg hidden-xs-only">{{ item.describe }} 条</span>
             </div>
           </div>
         </div>
       </el-col>
-      <el-col :xs="0" :sm="10" :md="8" :lg="6" :xl="4">
+      <el-col :xs="0" :sm="10" :md="6" :lg="5" :xl="4">
         <!-- 右侧组件 -->
         <!-- <div class="font_color container-bg right-style"></div> -->
         <NewList></NewList>
         <Friends></Friends>
       </el-col>
-      <el-col :xs="0" :sm="1" :md="1" :lg="2" :xl="5">
+      <el-col :xs="0" :sm="1" :md="1" :lg="4" :xl="5">
         <div>&nbsp;</div>
       </el-col>
     </el-row>
@@ -123,8 +121,9 @@ export default {
 
       .container-statistical {
         margin-top: 20px;
-        font-size 12px
-        line-height 24px
+        font-size: 12px;
+        line-height: 24px;
+
         .container-mg {
           margin-right: 10px;
         }
@@ -142,14 +141,14 @@ export default {
         .container-class {
           height: 20px;
           background-color: rgba(tag_mybgc, 0.36);
-          
           padding: 2px 6px;
           font-size: 12px;
           line-height: 20px;
           border-radius: 4px;
-		  a {
-			  color: rgba(tag_mycolor, 0.87) !important;
-		  }
+
+          a {
+            color: rgba(tag_mycolor, 0.87) !important;
+          }
         }
 
         .container-left {
@@ -181,12 +180,12 @@ export default {
           background-color: #fff;
           border: 1px solid #333;
           border-radius: 4px;
-		  overflow: hidden;
+          overflow: hidden;
 
           img {
             width: 100%;
             height: 100%;
-			transition: all 0.6s;
+            transition: all 0.6s;
           }
 
           img:hover {
@@ -204,10 +203,11 @@ export default {
           margin-left: 180px;
           height: 102px;
         }
-		.container-mark:hover {
-			text-decoration underline 
-			cursor pointer	
-		}
+
+        .container-mark:hover {
+          text-decoration: underline;
+          // cursor: pointer;
+        }
       }
     }
   }

@@ -5,10 +5,15 @@
         <span>友情链接</span>
       </h3>
       <ul>
-        <li v-for="item in title" :key="item.id">
+        <li>
+          <a href="https://www.iyouhun.com/" target="view_window">
+            <span class="animate-friend"> 游魂博客 </span>
+          </a>
+        </li>
+        <!-- <li v-for="item in title" :key="item.id">
           <span class="newlist-index"> {{ item.id }} </span>
           <span> {{ item.title }} </span>
-        </li>
+        </li> -->
       </ul>
     </div>
 </template>

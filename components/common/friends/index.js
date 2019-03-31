@@ -28,16 +28,16 @@ const watch = {
 // -- METHODS --
 
 const methods = {
-    async loadTitle (app) {
-        let res = await app.$axios.get("article/1");
-        data.title = res.data.data;
-    }
+    // async loadTitle (app) {
+    //     let res = await app.$axios.get("article/1");
+    //     data.title = res.data.data;
+    // }
 };
 
 // -- HOOKS --
 
 function mounted() {
-  methods.loadTitle(this);
+  // methods.loadTitle(this);
 }
 
 // == EXPORT ==

@@ -7,17 +7,13 @@ export default {
    ** Headers of the page
    */
   head: {
-    title: pkg.name,
+    title: '易山博客',
     meta: [{
         charset: 'utf-8'
       },
       {
         name: 'viewport',
         content: 'width=device-width, initial-scale=1'
-      },
-      {
-        name: 'baidu-site-verification',
-        content: 'P2PJdvvcN4'
       },
       {
         name: 'keywords',
@@ -36,7 +32,7 @@ export default {
     link: [{
         rel: 'icon',
         type: 'image/x-icon',
-        href: '/favicon.ico'
+        href: 'http://ladies.ren:8080/img/titleLogo.png'
       },
       {
         rel: 'stylesheet',
@@ -66,10 +62,7 @@ export default {
    */
   plugins: [
     '@/plugins/element-ui',
-    {
-      src: '~/plugins/particles.js',
-      ssr: false
-    }
+    {src: '~/plugins/particles.js',ssr: false}
   ],
 
   /*
@@ -78,8 +71,12 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/proxy'
+    '@nuxtjs/proxy',
+    '@nuxtjs/markdownit'
   ],
+  markdownit: {
+    injected: true
+  },
   /*
    ** Axios module configuration
    */
@@ -98,11 +95,11 @@ export default {
    ** Build configuration
    */
   build: {
-    vendor: ['external_library', 'axios'],
+    // vendor: ['external_library', 'axios'],
     transpile: [/^element-ui/],
-    extractCSS: {
-      allChunks: true
-    },
+    // extractCSS: {
+    //   allChunks: true
+    // },
     analyze: false,
     /*
      ** You can extend webpack config here
