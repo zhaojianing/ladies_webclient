@@ -38,7 +38,6 @@ const methods = {
 
 function mounted() {
   methods.loadTitle(this);
-  console.log(data)
 }
 
 // == EXPORT ==

@@ -12,7 +12,7 @@
         <!-- 文章部分 -->
         <div v-for="item in article" :key="item.id" class="font_color container-bg leaft-style">
           <!-- <router-link :to="`/article-details/${item.id}`"> -->
-          <router-link :to="{name:'article-details',params:{id:`${item.id}`,num:`${item.watch_length}`}}">
+          <router-link :to="{name:'article-details',params:{id:`${item.id}`,num:`${item.watch_length}`,mdId:`${item.md_id}`,vcmId:`${item.voicemail_id}`}}">
             <div class="container-titleBox">
               <h3 class="container-title container-init">{{ item.title }}</h3>
             </div>

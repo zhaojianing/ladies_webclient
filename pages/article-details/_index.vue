@@ -7,6 +7,42 @@
       <el-col class="container-col" :xs="24" :sm="12" :md="14" :lg="14" :xl="10">
         <!-- 文章部分 -->
         <div class="font_color container-bg leaft-style" v-html="$md.render(model)"></div>
+        <!-- 发表评论部分 -->
+        <div class="font_color container-bg leaft-style vcmContainer">
+          <div class="cvmBtn">
+            <el-button type="primary" icon="el-icon-edit" :loading="cvmLoding" @click="handleCvm">评论</el-button>
+          </div>
+          <h4 class="vcmTitle">发表留言</h4>
+          <el-input placeholder="阁下尊姓大名(必填)" v-model="vcmName">
+            <template slot="prepend">江湖名号:</template>
+          </el-input>
+          <el-input placeholder="阁下Email(选填)" v-model="vcmEmail">
+            <template slot="prepend">江湖邮箱:</template>
+          </el-input>
+          <el-input placeholder="阁下博客(选填)" v-model="vcmUrl">
+            <template slot="prepend">江湖博客:</template>
+          </el-input>
+          <el-input
+            type="textarea"
+            :autosize="{ minRows: 4}"
+            placeholder="请输入阁下高见..."
+            v-model="vcmMessage"
+          ></el-input>
+        </div>
+        <!-- 回显评论部分 -->
+        <div class="font_color container-bg leaft-style vcmShow">
+          <div v-for="item in callShow" :key="item.id">
+            <div class="vcmCallTit">
+              <img :src="imgUrl" class="vcnImg">
+              <span> {{item.name}} : 阁下有感</span>
+              <div class="vamRight"> {{item.createdAt}} </div>
+            </div>
+            <div class="vamMess">
+              {{item.content}}
+              <div class="vamTextRight">留言来自: {{item.version}}</div>
+            </div>
+          </div>
+        </div>
       </el-col>
       <el-col :xs="0" :sm="10" :md="8" :lg="6" :xl="4">
         <NewList></NewList>
@@ -21,6 +57,7 @@
 
 <script>
 import { NewList, Friends } from "@/components/common";
+import getV from "@/plugins/getV";
 export default {
   components: {
     NewList,
@@ -28,18 +65,32 @@ export default {
   },
   data() {
     return {
-      model: ""
+      model: "",
+      mdId: this.$route.params.mdId + "",
+      id: this.$route.params.id + "",
+      num: this.$route.params.num + "",
+      vcmId: this.$route.params.vcmId + "",
+      vcmName: "", // 评论名称
+      vcmEmail: "", // 评论邮箱
+      vcmUrl: "", // 评论博客地址
+      vcmMessage: "", //评论内容
+      imgUrl: "http://ladies.ren:8080/img/titleLogo.png", // 图片地址
+      interV: "", // 浏览器版本
+      callShow: [], // 回显留言
+      cvmLoding: false,  // loading 
     };
   },
   created() {
     // 查询 文章详情
-    this.initLoad(this.$route.params.id);
+    this.initLoad(this.mdId);
     // 添加观看人数加一
-    this.watchAdd(this.$route.params.id,this.$route.params.num-0+1);
+    this.watchAdd(this.id, this.num - 0 + 1);
+    this.vcmId != "null" ? this.vcm(this.vcmId) : null;
   },
   methods: {
+    // 首次文章加载数据
     async initLoad(id) {
-      // 请求 md 
+      // 请求 md
       const {
         data: { code, data }
       } = await this.$axios.get(`details/${id}`);
@@ -47,10 +98,52 @@ export default {
         this.model = data.text;
       }
     },
-    async watchAdd(id,num) {
+    // 观看人数添加
+    async watchAdd(id, num) {
       const {
         data: { code, data }
       } = await this.$axios.get(`watchadd/${id}-${num}`);
+    },
+    // 评论加载
+    async vcm(id) {
+      const { data } = await this.$axios.get(`vcmid/${id}`);
+      console.log(data.data);
+      this.callShow = data.data;
+    },
+    async handleCvm () {
+      this.cvmLoding = true;
+      console.log(this.vcmName)
+      if (this.vcmName === "") {
+        this.$message({
+          message: '行走江湖，阁下留个名字呗',
+          center: true
+        });
+        this.cvmLoding = false;
+        return;
+      } else if (this.vcmMessage === "") {
+        this.$message({
+          message: '还请阁下高见，鄙人在次等候多时了!',
+          center: true
+        });
+        this.cvmLoding = false;
+        return;
+      } else {
+        let version = getV().type + "---V:" + getV().version.split(".")[0];
+          const {data,code} = await this.$axios.post('/createvcm',{
+            name: this.vcmName,
+            content: this.vcmMessage,
+            article_id: this.id,
+            version: version,
+            createdAt: new Date(),
+            avatar: this.imgUrl,
+            url: this.vcmUrl,
+            reply_id: null,
+            email: this.vcmEmail
+          })
+            this.cvmLoding = false;
+            this.vcm(this.vcmId)
+      }
+      // this.cvmLoding = false
     }
   }
 };
@@ -66,6 +159,50 @@ export default {
     background-color: rgba(theme_bgc, 0.6);
     height: 180px;
     border-radius: 10px;
+    height: auto;
+
+    .vamMess {
+      padding: 0 0 10px 34px;
+      border-bottom: 1px solid font_hover;
+
+      .vamTextRight {
+        text-align: right;
+      }
+    }
+
+    .vcmCallTit {
+      width: 100%;
+      height: 20px;
+      line-height: 20px;
+      margin-bottom: 20px;
+
+      .vamRight {
+        float: right;
+      }
+
+      span {
+        vertical-align: top;
+      }
+
+      .vcnImg {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+    }
+
+    img {
+      width: 100%;
+    }
+
+    .vcmTitle {
+      border-bottom: 1px solid font_color;
+    }
+
+    .cvmBtn {
+      float: right;
+    }
   }
 
   .leaft-style, .right-style {

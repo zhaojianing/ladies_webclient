@@ -5,9 +5,14 @@
         <span>友情链接</span>
       </h3>
       <ul>
-        <li>
+        <li class="friend-url">
           <a href="https://www.iyouhun.com/" target="view_window">
             <span class="animate-friend"> 游魂博客 </span>
+          </a>
+        </li>
+        <li class="friend-url">
+          <a href="https://jooger.me/" target="view_window">
+            <span class="animate-friend"> Jooger </span>
           </a>
         </li>
         <!-- <li v-for="item in title" :key="item.id">
