@@ -13,13 +13,13 @@
             <el-button type="primary" icon="el-icon-edit" :loading="cvmLoding" @click="handleCvm">评论</el-button>
           </div>
           <h4 class="vcmTitle">发表留言</h4>
-          <el-input placeholder="阁下尊姓大名(必填)" v-model="vcmName">
+          <el-input placeholder="阁下尊姓大名(必填)" v-model="vcmName" autocomplete="on">
             <template slot="prepend">江湖名号:</template>
           </el-input>
-          <el-input placeholder="阁下Email(选填)" v-model="vcmEmail">
+          <el-input placeholder="阁下Email(选填)" v-model="vcmEmail" autocomplete="on">
             <template slot="prepend">江湖邮箱:</template>
           </el-input>
-          <el-input placeholder="阁下博客(选填)" v-model="vcmUrl">
+          <el-input placeholder="阁下博客(选填)" v-model="vcmUrl" autocomplete="on">
             <template slot="prepend">江湖博客:</template>
           </el-input>
           <el-input
@@ -34,12 +34,20 @@
           <div v-for="item in callShow" :key="item.id">
             <div class="vcmCallTit">
               <img :src="imgUrl" class="vcnImg">
-              <span> {{item.name}} : 阁下有感</span>
-              <div class="vamRight"> {{item.createdAt}} </div>
+              <span>{{item.name}} : 阁下有感</span>
+              <div class="vamRight">{{item.createdAt}}</div>
             </div>
             <div class="vamMess">
               {{item.content}}
-              <div class="vamTextRight">留言来自: {{item.version}}</div>
+              <div class="vamTextRight">
+                <div class="vamCall" title="记得在上方发表留言处  留下邮箱，否则马车要赶好几天才能赶到洛阳">
+                  <i class="el-icon-message"></i> 回复
+                </div>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;留言来自: {{item.version}}</span>
+              </div>
+              <!-- <div class="vamCallBox">
+                <el-input type="textarea" :rows="4" placeholder="高手过招，招招笔芯 💗💗💗 " v-model="vamcallText"></el-input>
+              </div> -->
             </div>
           </div>
         </div>
@@ -57,7 +65,7 @@
 
 <script>
 import { NewList, Friends } from "@/components/common";
-import { mapMutations } from 'vuex';
+import { mapMutations } from "vuex";
 // import getV from "@/plugins/getV";
 export default {
   components: {
@@ -65,23 +73,18 @@ export default {
     Friends
   },
   computed: {
-    article () {
-      return this.$store.state.article.list
+    article() {
+      return this.$store.state.article.list;
     }
   },
   data() {
     return {
       model: "",
-      // data: {
-      //   mdId: '',
-      //   id: '',
-      //   num: '',
-      //   vcmId: ''
-      // },
-      mdId:  "",
-      id:  "",
-      num:  "",
-      vcmId:  "",
+      describe: "", // 评论个数
+      mdId: "",
+      id: "",
+      num: "",
+      vcmId: "",
       vcmName: "", // 评论名称
       vcmEmail: "", // 评论邮箱
       vcmUrl: "", // 评论博客地址
@@ -89,12 +92,19 @@ export default {
       imgUrl: "http://ladies.ren:8080/img/titleLogo.png", // 图片地址
       interV: "", // 浏览器版本
       callShow: [], // 回显留言
-      cvmLoding: false,  // loading 
+      cvmLoding: false, // loading
+      vamcallText: '',  // 回复内容
     };
   },
   created() {
-    this.$store.commit('article/add',  this.$route.query)
-    
+    if (process.browser) {
+      this.vcmName = localStorage.name || "";
+      this.vcmEmail = localStorage.vcmEmail || "";
+      this.vcmUrl = localStorage.vcmUrl || "";
+    }
+
+    this.$store.commit("article/add", this.$route.query);
+
     this.initLoad(this.article[0].mdId);
     // 添加观看人数加一
     this.watchAdd(this.article[0].id, this.article[0].num - 0 + 1);
@@ -120,43 +130,65 @@ export default {
     // 评论加载
     async vcm(id) {
       const { data } = await this.$axios.get(`vcmid/${id}`);
-      console.log(data.data);
       this.callShow = data.data;
     },
     // 添加评论
-    async handleCvm () {
+    async handleCvm() {
       this.cvmLoding = true;
       if (this.vcmName === "") {
         this.$message({
-          message: '行走江湖，阁下留个名字呗',
+          message: "行走江湖，阁下留个名字呗",
           center: true
         });
         this.cvmLoding = false;
         return;
       } else if (this.vcmMessage === "") {
         this.$message({
-          message: '还请阁下高见，鄙人在次等候多时了!',
+          message: "还请阁下高见，鄙人在次等候多时了!",
           center: true
         });
         this.cvmLoding = false;
         return;
       } else {
-        let version = window.getVersion().type + "---V" + window.getVersion().version.split(".")[0];
-          const {data,code} = await this.$axios.post('/createvcm',{
-            name: this.vcmName,
-            content: this.vcmMessage,
-            article_id: this.article[0].id,
-            version: version,
-            createdAt: new Date(),
-            avatar: this.imgUrl,
-            url: this.vcmUrl,
-            reply_id: null,
-            email: this.vcmEmail
-          })
-            this.cvmLoding = false;
-            this.vcm(this.article[0].vcmId)
+        if (process.browser) {
+          localStorage.name = this.vcmName;
+          localStorage.vcmEmail = this.vcmEmail;
+          localStorage.vcmUrl = this.vcmUrl;
+        }
+
+        this.watchComment(this.article[0].id);
+
+        // 添加评论操作
+        let version =
+          window.getVersion().type +
+          "---V" +
+          window.getVersion().version.split(".")[0];
+        const { data, code } = await this.$axios.post("/createvcm", {
+          name: this.vcmName,
+          content: this.vcmMessage,
+          article_id: this.article[0].id,
+          version: version,
+          createdAt: new Date(),
+          avatar: this.imgUrl,
+          url: this.vcmUrl,
+          reply_id: null,
+          email: this.vcmEmail
+        });
+        this.cvmLoding = false;
+        this.vcm(this.article[0].vcmId);
       }
       // this.cvmLoding = false
+    },
+    // 查看评论人数操作
+    async watchComment(id) {
+      const { data } = await this.$axios.get(`/watchComment/${id}`);
+      if (data.code === 200) {
+        this.updataComment(id, data.data[0].describe + 1);
+      }
+    },
+    // 更新评论人数
+    async updataComment(id, num) {
+      const { data } = await this.$axios.get(`/updataComment/${id}-${num}`);
     }
   }
 };
@@ -177,9 +209,22 @@ export default {
     .vamMess {
       padding: 0 0 10px 34px;
       border-bottom: 1px solid font_hover;
-
+      .vamCallBox {
+        margin-top 10px
+        background-color rgba(theme_bgc,.6) 
+      }
       .vamTextRight {
         text-align: right;
+        margin-top: 10px;
+
+        .vamCall {
+          float: left;
+        }
+
+        .vamCall:hover {
+          cursor: pointer;
+          color: #ccc;
+        }
       }
     }
 
