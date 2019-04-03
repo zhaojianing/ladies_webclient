@@ -62,7 +62,8 @@ export default {
    */
   plugins: [
     '@/plugins/element-ui',
-    {src: '~/plugins/particles.js',ssr: false}
+    {src: '~/plugins/particles.js',ssr: false},
+    {src: '~/plugins/getV',ssr: false}
   ],
 
   /*

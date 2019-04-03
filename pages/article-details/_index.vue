@@ -57,19 +57,31 @@
 
 <script>
 import { NewList, Friends } from "@/components/common";
-import getV from "@/plugins/getV";
+import { mapMutations } from 'vuex';
+// import getV from "@/plugins/getV";
 export default {
   components: {
     NewList,
     Friends
   },
+  computed: {
+    article () {
+      return this.$store.state.article.list
+    }
+  },
   data() {
     return {
       model: "",
-      mdId: this.$route.params.mdId + "",
-      id: this.$route.params.id + "",
-      num: this.$route.params.num + "",
-      vcmId: this.$route.params.vcmId + "",
+      // data: {
+      //   mdId: '',
+      //   id: '',
+      //   num: '',
+      //   vcmId: ''
+      // },
+      mdId:  "",
+      id:  "",
+      num:  "",
+      vcmId:  "",
       vcmName: "", // 评论名称
       vcmEmail: "", // 评论邮箱
       vcmUrl: "", // 评论博客地址
@@ -81,11 +93,12 @@ export default {
     };
   },
   created() {
-    // 查询 文章详情
-    this.initLoad(this.mdId);
+    this.$store.commit('article/add',  this.$route.query)
+    
+    this.initLoad(this.article[0].mdId);
     // 添加观看人数加一
-    this.watchAdd(this.id, this.num - 0 + 1);
-    this.vcmId != "null" ? this.vcm(this.vcmId) : null;
+    this.watchAdd(this.article[0].id, this.article[0].num - 0 + 1);
+    this.vcmId != "null" ? this.vcm(this.article[0].vcmId) : null;
   },
   methods: {
     // 首次文章加载数据
@@ -110,9 +123,9 @@ export default {
       console.log(data.data);
       this.callShow = data.data;
     },
+    // 添加评论
     async handleCvm () {
       this.cvmLoding = true;
-      console.log(this.vcmName)
       if (this.vcmName === "") {
         this.$message({
           message: '行走江湖，阁下留个名字呗',
@@ -128,11 +141,11 @@ export default {
         this.cvmLoding = false;
         return;
       } else {
-        let version = getV().type + "---V:" + getV().version.split(".")[0];
+        let version = window.getVersion().type + "---V" + window.getVersion().version.split(".")[0];
           const {data,code} = await this.$axios.post('/createvcm',{
             name: this.vcmName,
             content: this.vcmMessage,
-            article_id: this.id,
+            article_id: this.article[0].id,
             version: version,
             createdAt: new Date(),
             avatar: this.imgUrl,
@@ -141,7 +154,7 @@ export default {
             email: this.vcmEmail
           })
             this.cvmLoding = false;
-            this.vcm(this.vcmId)
+            this.vcm(this.article[0].vcmId)
       }
       // this.cvmLoding = false
     }
