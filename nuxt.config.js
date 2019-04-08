@@ -54,7 +54,8 @@ export default {
   css: [
     'element-ui/lib/theme-chalk/index.css',
     '~/assets/style/init.styl',
-    '~/assets/style/main.styl'
+    '~/assets/style/main.styl',
+    '~/assets/style/iconfont/iconfont.css',
   ],
 
   /*

@@ -6,7 +6,7 @@
       </el-col>
       <el-col class="container-col" :xs="24" :sm="12" :md="14" :lg="14" :xl="10">
         <!-- 文章部分 -->
-        <div class="font_color container-bg leaft-style" v-html="$md.render(model)"></div>
+        <div class="font_color details container-bg leaft-style" v-html="$md.render(model)"></div>
         <!-- 发表评论部分 -->
         <div class="font_color container-bg leaft-style vcmContainer">
           <div class="cvmBtn">
@@ -47,7 +47,7 @@
               </div>
               <!-- <div class="vamCallBox">
                 <el-input type="textarea" :rows="4" placeholder="高手过招，招招笔芯 💗💗💗 " v-model="vamcallText"></el-input>
-              </div> -->
+              </div>-->
             </div>
           </div>
         </div>
@@ -93,7 +93,7 @@ export default {
       interV: "", // 浏览器版本
       callShow: [], // 回显留言
       cvmLoding: false, // loading
-      vamcallText: '',  // 回复内容
+      vamcallText: "" // 回复内容
     };
   },
   created() {
@@ -209,10 +209,12 @@ export default {
     .vamMess {
       padding: 0 0 10px 34px;
       border-bottom: 1px solid font_hover;
+
       .vamCallBox {
-        margin-top 10px
-        background-color rgba(theme_bgc,.6) 
+        margin-top: 10px;
+        background-color: rgba(theme_bgc, 0.6);
       }
+
       .vamTextRight {
         text-align: right;
         margin-top: 10px;

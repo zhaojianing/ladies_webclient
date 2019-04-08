@@ -3,7 +3,7 @@
     <el-row :gutter="20">
       <div class="notice">
         <i class="el-icon-bell"></i>
-        <span>： 大学未遂求职人员：email: zjn8752@163.com</span>
+        <span>： 每一天呢，都是全新的一天噢 ^>^ !</span>
       </div>
       <el-col :xs="0" :sm="1" :md="1" :lg="4" :xl="5">
         <div>&nbsp;</div>
@@ -65,7 +65,7 @@ import { NewList, Friends } from "@/components/common";
 export default {
   data() {
     return {
-      article: "空"
+      article: ""
     };
   },
   mounted() {
