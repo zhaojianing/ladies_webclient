@@ -29,8 +29,9 @@ const watch = {
 
 const methods = {
     async loadTitle (app) {
-        let res = await app.$axios.get("article/1");
+        let res = await app.$axios.get("hot");
         data.title = res.data.data;
+        // console.log(data.title)
     }
 };
 

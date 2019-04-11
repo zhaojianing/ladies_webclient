@@ -11,7 +11,7 @@ export const state = () => ({
       state.list.splice(state.list.indexOf(todo), 1)
     },
     toggle (state, todo) {
-      console.log(todo)
+      // console.log(todo)
     },
     get (state, url) {
         this.$router.push({ name: "index" })

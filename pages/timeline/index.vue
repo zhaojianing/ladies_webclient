@@ -10,7 +10,7 @@
           <el-timeline-item v-for="item in title" :key="item.id" :timestamp="item.createdAt" placement="top">
             <el-card>
               <router-link :to="{name:'article-details',query:{id:`${item.id}`,num:`${item.watch_length}`,mdId:`${item.md_id}`,vcmId:`${item.voicemail_id}`}}">
-              <p> {{item.comments}} </p>
+              <p> {{item.title}} </p>
               </router-link>
             </el-card>
           </el-timeline-item>
