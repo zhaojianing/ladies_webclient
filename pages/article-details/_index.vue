@@ -40,14 +40,62 @@
             <div class="vamMess">
               {{item.content}}
               <div class="vamTextRight">
-                <div class="vamCall" title="记得在上方发表留言处  留下邮箱，否则马车要赶好几天才能赶到洛阳">
-                  <i class="el-icon-message"></i> 回复
+                <div
+                  class="vamCall"
+                  @click="isShow(item.id,item.name)"
+                  title="记得在上方发表留言处  留下邮箱，否则马车要赶好几天才能赶到洛阳"
+                >
+                  <i class="el-icon-message"></i>
+                  <span>{{isShowText}}</span>
                 </div>
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;留言来自: {{item.version}}</span>
               </div>
-              <!-- <div class="vamCallBox">
-                <el-input type="textarea" :rows="4" placeholder="高手过招，招招笔芯 💗💗💗 " v-model="vamcallText"></el-input>
-              </div>-->
+              <!-- <callback :id="item.id" :data="callBackData"></callback> -->
+              <div :ref="item.id" v-show="false" class="callbackBox">
+                <!-- 展示回复信息部分 -->
+                <div class="callback-for" v-for="call in callData" :key="call.id">
+                  <div class="callback-title">
+                    <img :src="imgUrl" alt="头像">
+                    <span> {{call.name}} </span>
+                    <span>回复</span>
+                    <span> {{ call.vo_name }} </span>
+                  </div>
+                  <div class="callback-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ call.comments }} </div>
+                  <div class="vamTextRight">
+                    <div class="vamCall" title="记得在上方发表留言处  留下邮箱，否则马车要赶好几天才能赶到洛阳">
+                      <i class="el-icon-message"></i>
+                      <span>回复</span>
+                    </div>
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;留言来自: {{call.getv}}</span>
+                  </div>
+                </div>
+                <!-- 回复表单 -->
+                <div class="font_color leaft-style vcmContainer">
+                  <div class="cvmBtn">
+                    <el-button
+                      type="primary"
+                      icon="el-icon-edit"
+                      @click="handleCall"
+                    >回复</el-button>
+                  </div>
+                  <h4 class="vcmTitle">回复：@ {{callget.name}} </h4>
+                  <el-input placeholder="阁下尊姓大名(必填)" v-model="vcmName" autocomplete="on">
+                    <template slot="prepend">江湖名号:</template>
+                  </el-input>
+                  <el-input placeholder="阁下Email(选填)" v-model="vcmEmail" autocomplete="on">
+                    <template slot="prepend">江湖邮箱:</template>
+                  </el-input>
+                  <el-input placeholder="阁下博客(选填)" v-model="vcmUrl" autocomplete="on">
+                    <template slot="prepend">江湖博客:</template>
+                  </el-input>
+                  <el-input
+                    type="textarea"
+                    :autosize="{ minRows: 4}"
+                    placeholder="请输入阁下高见..."
+                    v-model="callvcmMessage"
+                  ></el-input>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -66,11 +114,13 @@
 <script>
 import { NewList, Friends } from "@/components/common";
 import { mapMutations } from "vuex";
+import callback from "@/pages/callback/index";
 // import getV from "@/plugins/getV";
 export default {
   components: {
     NewList,
-    Friends
+    Friends,
+    callback
   },
   computed: {
     article() {
@@ -93,7 +143,13 @@ export default {
       interV: "", // 浏览器版本
       callShow: [], // 回显留言
       cvmLoding: false, // loading
-      vamcallText: "" // 回复内容
+      vamcallText: "", // 回复内容
+      isVShow: false, // 是否显示回复模块
+      isShowText: "回复",
+      callBackData: "", // 回复面板需要的值
+      callvcmMessage: "", // call 回复内容
+      callData: [], // 返回内容
+      callget: {}, // 回复信息数据
     };
   },
   created() {
@@ -166,7 +222,7 @@ export default {
         const { data, code } = await this.$axios.post("/createvcm", {
           name: this.vcmName,
           content: this.vcmMessage,
-          article_id: this.article[0].id,
+          article_id: this.article[0].vcmId,
           version: version,
           createdAt: new Date(),
           avatar: this.imgUrl,
@@ -189,6 +245,40 @@ export default {
     // 更新评论人数
     async updataComment(id, num) {
       const { data } = await this.$axios.get(`/updataComment/${id}-${num}`);
+    },
+    // 显示隐藏回复模块
+    isShow(id,name) {
+      this.callShow.map(list => {
+          this.$refs[list.id][0].style.display = "none"
+      })
+      this.$refs[id][0].style.display === "block"
+        ? (this.$refs[id][0].style.display = "none")
+        : (this.$refs[id][0].style.display = "block");
+      this.$refs[id][0].parentElement.children[0].children[0].children[1]
+        .innerHTML === "隐藏"
+        ? (this.$refs[
+            id
+          ][0].parentElement.children[0].children[0].children[1].innerHTML =
+            "回复")
+        : (this.$refs[
+            id
+          ][0].parentElement.children[0].children[0].children[1].innerHTML =
+            "隐藏");
+      
+      
+      this.callget.name = name
+      this.callget.id = id
+      this.getCall(id);
+    },
+    // 查询当前的评论内容
+    async getCall(id) {
+      const { data } = await this.$axios.get(`callback/${id}`);
+      this.callData = data.data;
+      console.log(this.callData);
+    },
+    // 回复信息
+    handleCall() {
+      
     }
   }
 };
@@ -210,9 +300,34 @@ export default {
       padding: 0 0 10px 34px;
       border-bottom: 1px solid font_hover;
 
-      .vamCallBox {
-        margin-top: 10px;
-        background-color: rgba(theme_bgc, 0.6);
+      .callbackBox {
+        width: calc(100% - 20px);
+        height: auto;
+        background-color: rgba(callback_bgc, 0.6);
+        margin-top: 20px;
+        border: 1px solid theme_bgc;
+        padding: 10px;
+
+        .callback-for {
+          margin-bottom: 10px;
+          border-bottom: 1px dashed #999;
+          padding-bottom: 10px;
+          .callback-text {
+            margin: 10px 0;
+          }
+
+          .callback-title {
+            height: 20px;
+
+            span {
+            }
+
+            img {
+              width: 20px;
+              vertical-align: bottom;
+            }
+          }
+        }
       }
 
       .vamTextRight {
