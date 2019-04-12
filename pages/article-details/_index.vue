@@ -46,7 +46,7 @@
                   title="记得在上方发表留言处  留下邮箱，否则马车要赶好几天才能赶到洛阳"
                 >
                   <i class="el-icon-message"></i>
-                  <span>{{isShowText}}</span>
+                  <span>{{isShowText}}</span> <span> {{item.reply_id}} </span>
                 </div>
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;留言来自: {{item.version}}</span>
               </div>
@@ -56,15 +56,17 @@
                 <div class="callback-for" v-for="call in callData" :key="call.id">
                   <div class="callback-title">
                     <img :src="imgUrl" alt="头像">
-                    <span> {{call.name}} </span>
+                    <span>{{call.name}}</span>
                     <span>回复</span>
-                    <span> {{ call.vo_name }} </span>
+                    <span>@{{ call.vo_name }}</span>
                   </div>
-                  <div class="callback-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ call.comments }} </div>
+                  <div
+                    class="callback-text"
+                  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ call.comments }}</div>
                   <div class="vamTextRight">
                     <div class="vamCall" title="记得在上方发表留言处  留下邮箱，否则马车要赶好几天才能赶到洛阳">
                       <i class="el-icon-message"></i>
-                      <span>回复</span>
+                      <span @click="handlecallName(call.name)">回复</span>
                     </div>
                     <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;留言来自: {{call.getv}}</span>
                   </div>
@@ -72,13 +74,13 @@
                 <!-- 回复表单 -->
                 <div class="font_color leaft-style vcmContainer">
                   <div class="cvmBtn">
-                    <el-button
-                      type="primary"
-                      icon="el-icon-edit"
-                      @click="handleCall"
-                    >回复</el-button>
+                    <el-button type="primary" icon="el-icon-edit" @click="handleCall(item.id,item.id,item.reply_id)">回复</el-button>
                   </div>
-                  <h4 class="vcmTitle">回复：@ {{callget.name}} </h4>
+                  <h4 class="vcmTitle">
+                    回复：@ {{callget.name}}
+                    <span v-if="isShowCall">&nbsp;&nbsp;&nbsp;@ {{callget.twoname}}</span>
+                  </h4>
+                  <!-- <el-input placeholder="回复" v-model="callget.name"></el-input> -->
                   <el-input placeholder="阁下尊姓大名(必填)" v-model="vcmName" autocomplete="on">
                     <template slot="prepend">江湖名号:</template>
                   </el-input>
@@ -150,6 +152,8 @@ export default {
       callvcmMessage: "", // call 回复内容
       callData: [], // 返回内容
       callget: {}, // 回复信息数据
+      isShowCall: false, // 是否显示回复信息@
+      totalLength: 0,  // 回复总数
     };
   },
   created() {
@@ -247,38 +251,62 @@ export default {
       const { data } = await this.$axios.get(`/updataComment/${id}-${num}`);
     },
     // 显示隐藏回复模块
-    isShow(id,name) {
+    isShow(id, name) {
+      this.isShowCall = false;
+      this.callget.twoname = "";
+      this.callget.flag = false;
+
       this.callShow.map(list => {
-          this.$refs[list.id][0].style.display = "none"
-      })
+        this.$refs[list.id][0].style.display = "none";
+      });
       this.$refs[id][0].style.display === "block"
         ? (this.$refs[id][0].style.display = "none")
         : (this.$refs[id][0].style.display = "block");
-      this.$refs[id][0].parentElement.children[0].children[0].children[1]
-        .innerHTML === "隐藏"
-        ? (this.$refs[
-            id
-          ][0].parentElement.children[0].children[0].children[1].innerHTML =
-            "回复")
-        : (this.$refs[
-            id
-          ][0].parentElement.children[0].children[0].children[1].innerHTML =
-            "隐藏");
-      
-      
-      this.callget.name = name
-      this.callget.id = id
+      // this.$refs[id][0].parentElement.children[0].children[0].children[1]
+      //   .innerHTML === "隐藏"
+      //   ? (this.$refs[
+      //       id
+      //     ][0].parentElement.children[0].children[0].children[1].innerHTML =
+      //       "回复")
+      //   : (this.$refs[
+      //       id
+      //     ][0].parentElement.children[0].children[0].children[1].innerHTML =
+      //       "隐藏");
+
+      this.callget.name = name;
+      this.callget.id = id;
       this.getCall(id);
     },
     // 查询当前的评论内容
     async getCall(id) {
       const { data } = await this.$axios.get(`callback/${id}`);
       this.callData = data.data;
-      console.log(this.callData);
     },
     // 回复信息
-    handleCall() {
-      
+    async handleCall(voId,id,num) {
+      let version =
+        window.getVersion().type +
+        "---V" +
+        window.getVersion().version.split(".")[0];
+      let data = {
+        img: this.imgUrl,
+        vo_id: voId,
+        name: this.vcmName,
+        vo_name: this.callget.flag ? this.callget.twoname : this.callget.name,
+        comments: this.callvcmMessage,
+        getv: version
+      };
+      const res = await this.$axios.post("createCall", data);
+      this.callData = res.data.data;
+      const update = await this.$axios.get(`updateVcm/${id}-${num+1}`);
+      console.log(update)
+    },
+    handlecallName(name) {
+      this.isShowCall = false;
+      this.callget.twoname = "";
+      this.isShowCall = true;
+      this.callget.twoname = name;
+      this.callget.flag = true;
     }
   }
 };
@@ -312,6 +340,7 @@ export default {
           margin-bottom: 10px;
           border-bottom: 1px dashed #999;
           padding-bottom: 10px;
+
           .callback-text {
             margin: 10px 0;
           }
