@@ -1,17 +1,17 @@
 <template>
     <div class="font_color right-style">
       <h3>
-        <span> <i class="el-icon-caret-right"></i> </span>
+        <span> <i class="icon-youlian iconfont"></i> </span>
         <span>友情链接</span>
       </h3>
       <ul>
         <li class="friend-url">
-          <a href="https://www.iyouhun.com/" target="view_window">
+          <a href="https://www.iyouhun.com/" target="view_window" class="font-hover">
             <span class="animate-friend"> 游魂博客 </span>
           </a>
         </li>
         <li class="friend-url">
-          <a href="https://jooger.me/" target="view_window">
+          <a href="https://jooger.me/" target="view_window" class="font-hover">
             <span class="animate-friend"> Jooger </span>
           </a>
         </li>

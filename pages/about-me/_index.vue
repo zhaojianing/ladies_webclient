@@ -14,7 +14,7 @@
             </div>
             <div class="left-box">
               <span class="iconfont icon-xingquaihao xingqu"></span>
-              <span>喜欢喝茶，看书，炉石，音乐，happy coding</span>
+              <span>喜欢喝茶，看书，音乐，健身，happy coding</span>
             </div>
             <div class="left-box">
               <span class="iconfont icon-qianming qianming"></span>

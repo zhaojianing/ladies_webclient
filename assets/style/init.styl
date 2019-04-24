@@ -53,6 +53,7 @@ section {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background rgb(162, 162, 163)
+    width: 8px;
 }
 
 // 头部样式替换
@@ -76,6 +77,16 @@ section {
 // content 部分
 .el-row {
     margin 0  !important;
+}
+.el-pagination.is-background .btn-next, .el-pagination.is-background .btn-prev, .el-pagination.is-background .el-pager li {
+    background-color: rgba(black_bgc, 0.5);
+    color: font_color;    
+}
+.el-pagination.is-background .el-pager li:not(.disabled).active {
+    background-color vcm_bgc; 
+}
+.el-pagination.is-background .el-pager li:not(.disabled):hover {
+    color: #fff;     
 }
 // 归档部分
 .el-timeline-item__node,.el-timeline-item__tail {

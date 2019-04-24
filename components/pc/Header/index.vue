@@ -7,6 +7,7 @@
       <nuxt-link class="header-link activeMv" :to="{name:'index'}">首页</nuxt-link>
       <nuxt-link class="header-link activeMv" :to="{name:'timeline'}">归档</nuxt-link>
       <nuxt-link class="header-link activeMv" :to="{name:'about-me'}">关于</nuxt-link>
+      <nuxt-link class="header-link activeMv" :to="{name:'shared'}">共享资源</nuxt-link>
       <nuxt-link class="header-link activeMv" :to="{name:'message-board'}">留言</nuxt-link>
       <div class="header-inner">
         <el-col :xs="0" :sm="20" :md="20" :lg="20" :xl="20">

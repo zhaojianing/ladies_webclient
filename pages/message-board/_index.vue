@@ -5,8 +5,8 @@
         <div>&nbsp;</div>
       </el-col>
       <el-col class="message-contenr" :xs="24" :sm="22" :md="22" :lg="20" :xl="14">
-        <h3>“ 如果星空是一本书，我愿和你一起等待晴朗，如果大海是一本书，我愿和你数遍每一朵浪花，如果时间是一本书，我愿和你分秒相聚，章章不离。 ”</h3>
-        <el-button class="message-btn" type="warning" plain @click="handleShow">感谢遇见</el-button>
+        <h3>“ 世界上所有的相遇都是久别的重逢 ”</h3>
+        <el-button class="message-btn" type="warning" plain @click="handleShow"> <i class="icon-b_maobi iconfont"></i> 以剑做笔 </el-button>
 
         <div class="font_color container-bg leaft-style vcmContainer" v-if="callMessage">
           <div class="cvmBtn">
