@@ -2,7 +2,7 @@
     <div class="font_color right-style">
       
         <h3>
-            <span> <i class="icon-icon-shouye-zuirewenzhang iconfont"></i> </span>
+            <span> <i class="icon-icon-shouye-zuirewenzhang iconfont font-size"></i> </span>
             <span>最热文章</span>
         </h3>
       <ul>

@@ -12,7 +12,7 @@ const data = {
 // -- COMPUTED --
 
 const computed = {
-
+    
 };
 
 // -- COMPONENTS -- 
@@ -31,7 +31,6 @@ const methods = {
     async loadTitle (app) {
         let res = await app.$axios.get("hot");
         data.title = res.data.data;
-        // console.log(data.title)
     }
 };
 
@@ -52,7 +51,11 @@ export default {
 
   components: components,
 
-  computed: computed,
+  computed: {
+    articleData() {
+      return this.$store.state.articleData.list[0];
+    }
+  },
 
   watch: watch,
 

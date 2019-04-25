@@ -1,4 +1,4 @@
-import { Friends } from "@/components/common"  // NewList,
+import { Classification,NewList } from "@/components/common"  // NewList,
 // -- NAME --
 
 const name = 'timeline';
@@ -18,7 +18,7 @@ const computed = {
 
 // -- COMPONENTS -- 
 
-const components = {Friends} // NewList
+const components = {Classification,NewList} // NewList
 
 // -- WATCH --
 

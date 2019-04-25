@@ -2,7 +2,7 @@
   <section class="container">
     <el-row :gutter="20">
       <div class="notice">
-        <i class="icon-ziyuan iconfont"></i>
+        <i class="icon-ziyuan iconfont font-size"></i>
         <span>： 地球之所以是圆的，是因为上帝想让那些走失或者迷路的人能够重新相遇。</span>
       </div>
       <el-col :xs="0" :sm="1" :md="1" :lg="4" :xl="5">
@@ -56,7 +56,9 @@
         <!-- 右侧组件 -->
         <!-- <div class="font_color container-bg right-style"></div> -->
         <NewList></NewList>
+        <Classification :classification="classification"></Classification>
         <Friends></Friends>
+        <Statistics></Statistics>
       </el-col>
       <el-col :xs="0" :sm="1" :md="1" :lg="4" :xl="5">
         <div>&nbsp;</div>
@@ -66,29 +68,34 @@
 </template>
 
 <script>
-import { NewList, Friends } from "@/components/common";
+import { NewList, Friends,Statistics,Classification } from "@/components/common";
 export default {
   data() {
     return {
       article: "",
       pageTotal: 10,
       page: 1,
+      classification:[]
     };
   },
-  mounted() {
+  created() {
     this.initLoad();
   },
   methods: {
     async initLoad(page) {
       page = page || this.page;
       let res = await this.$axios.get(`article/${page}`);
+      this.$store.commit("articleData/add", res.data.data);
       this.article = res.data.data;
       this.pageTotal = res.data.data.length;
+      this.classification = res.data.data;
     }
   },
   components: {
     NewList,
-    Friends
+    Friends,
+    Statistics,
+    Classification
   }
 };
 </script>

@@ -20,7 +20,8 @@
         <!-- 右侧组件 -->
         <!-- <div class="font_color container-bg right-style"></div> -->
         <!-- <NewList></NewList> -->
-        <Friends></Friends>
+        <NewList></NewList>
+        <Classification></Classification>
       </el-col>
       <el-col :xs="0" :sm="1" :md="1" :lg="2" :xl="5">
         <div>&nbsp;</div>
