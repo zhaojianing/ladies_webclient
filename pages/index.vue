@@ -32,21 +32,23 @@
               <!-- <div class="container-browser container-box container-init"> -->
                 <router-link :to="{name:'asyncData'}">{{ item.class }}</router-link>
               </div>
-              <div :class="item.typename">
-              <!-- <div class="container-original container-init container-class-box"> -->
-                <router-link :to="{name:'asyncData'}">{{ item.type }}</router-link>
-              </div>
-            </div>
-
-            <div class="container-right container-init">
-              <i class="el-icon-time"></i>
-              <span class="container-mg">{{ item.createdAt }}</span>
+              
               <i class="icon-zhuanlanyonghu iconfont"></i>
               <span class="container-mg hidden-xs-only">{{ item.author }}</span>
               <i class="icon-guankanliang iconfont"></i>
               <span class="container-mg hidden-xs-only">{{ item.watch_length }}</span>
               <i class="icon-pinglun iconfont"></i>
               <span class="container-mg hidden-xs-only">{{ item.describe }} 条</span>
+            </div>
+
+            <div class="container-right container-init">
+              <i class="el-icon-time"></i>
+              <span class="container-mg">{{ item.createdAt }}</span>
+              
+              <div :class="item.typename">
+              <!-- <div class="container-original container-init container-class-box"> -->
+                <router-link :to="{name:'asyncData'}">{{ item.type }}</router-link>
+              </div>
             </div>
           </div>
         </div>
@@ -115,6 +117,9 @@ export default {
     background: -o-linear-gradient(right, rgba(0, 0, 0, 0), theme_bgc, rgba(0, 0, 0, 0)); /* Opera 11.1 - 12.0 */
     background: -moz-linear-gradient(right, rgba(0, 0, 0, 0), theme_bgc, rgba(0, 0, 0, 0)); /* Firefox 3.6 - 15 */
     background: linear-gradient(to right, rgba(0, 0, 0, 0), theme_bgc, rgba(0, 0, 0, 0)); /* 标准的语法 */
+    .icon-ziyuan {
+      color: typefont_red
+    }
   }
 
   .container-col {

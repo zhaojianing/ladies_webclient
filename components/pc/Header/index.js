@@ -3,12 +3,12 @@ const data = () => {
     active: null,
     headerSearch: '',
     srcImg: require('~/assets/img/logo.png'),
-    search: ""
+    search: "",
   };
 }
 
 function mounted() {
-  methods.load()
+  methods.load();
 }
 
 const methods = {
@@ -75,5 +75,7 @@ export default {
   data: data,
   methods: methods,
   watch: watch,
-  mounted: mounted
+  mounted: mounted,
+  components: {
+  },
 }

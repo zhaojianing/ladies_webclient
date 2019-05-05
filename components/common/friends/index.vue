@@ -17,6 +17,12 @@
             <span class="animate-friend"> Jooger </span>
           </a>
         </li>
+        <li class="friend-url">
+          <a href="https://asdfv1929.github.io/" target="view_window" class="font-hover">
+          <img src="https://asdfv1929.github.io/images/headpic.jpg" alt="asdfv1929">
+            <span class="animate-friend"> asdfv1929 </span>
+          </a>
+        </li>
         <!-- <li v-for="item in title" :key="item.id">
           <span class="newlist-index"> {{ item.id }} </span>
           <span> {{ item.title }} </span>

@@ -21,7 +21,7 @@ export default {
       },
       {
         name: 'description',
-        content: '易山博客是一个分享技术教程，共享资源， 前端开发者交流的个人独立博客。'
+        content: '易山博客是一个分享技术教程，共享资源， 前端开发者交流的个人独立博客。游魂博客,Jooger,asdfv1929'
       },
       {
         hid: 'description',
@@ -32,7 +32,7 @@ export default {
     link: [{
         rel: 'icon',
         type: 'image/x-icon',
-        href: 'http://ladies.ren:8080/img/titleLogo.png'
+        href: 'http://ladies.ren:8080/image/titleLogo.png'
       },
       {
         rel: 'stylesheet',
@@ -74,7 +74,7 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
-    '@nuxtjs/markdownit'
+    '@nuxtjs/markdownit',
   ],
   markdownit: {
     injected: true

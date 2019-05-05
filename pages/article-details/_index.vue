@@ -6,7 +6,7 @@
       </el-col>
       <el-col class="container-col" :xs="24" :sm="12" :md="14" :lg="14" :xl="10">
         <!-- 文章部分 -->
-        <div class="font_color details container-bg leaft-style" v-html="$md.render(model)"></div>
+        <div class="font_color details container-bg leaft-style" v-highlight v-html="$md.render(model)"></div>
         <!-- 发表评论部分 -->
         <div class="font_color container-bg leaft-style vcmContainer">
           <div class="cvmBtn">
@@ -46,7 +46,8 @@
                   title="记得在上方发表留言处  留下邮箱，否则马车要赶好几天才能赶到洛阳"
                 >
                   <i class="el-icon-message"></i>
-                  <span>{{isShowText}}</span> <span> {{item.reply_id}} </span>
+                  <span>{{isShowText}}</span>
+                  <span>{{item.reply_id}}</span>
                 </div>
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;留言来自: {{item.version}}</span>
               </div>
@@ -74,11 +75,17 @@
                 <!-- 回复表单 -->
                 <div class="font_color leaft-style vcmContainer">
                   <div class="cvmBtn">
-                    <el-button type="primary" icon="el-icon-edit" @click="handleCall(item.id,item.id,item.reply_id)">回复</el-button>
+                    <el-button
+                      type="primary"
+                      icon="el-icon-edit"
+                      @click="handleCall(item.id,item.id,item.reply_id)"
+                    >回复</el-button>
                   </div>
                   <h4 class="vcmTitle">
                     回复：@ {{callget.name}}
-                    <span v-if="isShowCall">&nbsp;&nbsp;&nbsp;@ {{callget.twoname}}</span>
+                    <span
+                      v-if="isShowCall"
+                    >&nbsp;&nbsp;&nbsp;@ {{callget.twoname}}</span>
                   </h4>
                   <!-- <el-input placeholder="回复" v-model="callget.name"></el-input> -->
                   <el-input placeholder="阁下尊姓大名(必填)" v-model="vcmName" autocomplete="on">
@@ -118,6 +125,9 @@ import { NewList, Friends } from "@/components/common";
 import { mapMutations } from "vuex";
 import callback from "@/pages/callback/index";
 // import getV from "@/plugins/getV";
+// import hljs from "highlight.js";
+// import md from "markdown-it";
+// import "highlight.js/styles/tomorrow-night-eighties.css";
 export default {
   components: {
     NewList,
@@ -153,15 +163,42 @@ export default {
       callData: [], // 返回内容
       callget: {}, // 回复信息数据
       isShowCall: false, // 是否显示回复信息@
-      totalLength: 0,  // 回复总数
+      totalLength: 0 // 回复总数
     };
   },
   created() {
+    // debugger
+    // const highlighted = hljs.highlightAuto();
+    // function highlight(str, __) {
+    //   try {
+    //     return (
+    //       '<pre><code class="hljs">' +
+    //       hljs.highlightAuto(str).value +
+    //       "</code></pre>"
+    //     );
+    //   } catch (__) {
+    //     console.log(__);
+    //   }
+    // }
+
+    // const markdown = md({
+    //   html: true,
+    //   xhtmlOut: false,
+    //   breaks: false,
+    //   langPrefix: "language-",
+    //   linkify: false,
+    //   typographer: false,
+    //   quotes: "“”‘’",
+    //   highlight: highlight
+    // });
+    // markdown.renderer.rules.code_block = markdown.renderer.rules.fence;
+
     if (process.browser) {
       this.vcmName = localStorage.name || "";
       this.vcmEmail = localStorage.vcmEmail || "";
       this.vcmUrl = localStorage.vcmUrl || "";
     }
+    // hljs.registerLanguage('javascript', javascript);
 
     this.$store.commit("article/add", this.$route.query);
 
@@ -219,10 +256,21 @@ export default {
         this.watchComment(this.article[0].id);
 
         // 添加评论操作
-        let version =
-          window.getVersion().type +
-          "---V" +
-          window.getVersion().version.split(".")[0];
+        ///(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)
+        let version;
+        if (/(iPhone)/i.test(navigator.userAgent)) { //移动端
+            //TODO
+            version = 'iPhone';
+        } else if (/(iPad)/i.test(navigator.userAgent)) {
+            version = 'iPad';
+        } else if (/(iOS)/i.test(navigator.userAgent)) {
+            version = 'iOS';
+        } else if (/(Android)/i.test(navigator.userAgent)) {
+          version = 'Android';
+        }else {
+          version = window.getVersion().type +"---V" + window.getVersion().version.split(".")[0];
+        }
+        
         const { data, code } = await this.$axios.post("/createvcm", {
           name: this.vcmName,
           content: this.vcmMessage,
@@ -231,7 +279,7 @@ export default {
           createdAt: new Date(),
           avatar: this.imgUrl,
           url: this.vcmUrl,
-          reply_id: null,
+          reply_id: 0,
           email: this.vcmEmail
         });
         this.cvmLoding = false;
@@ -283,7 +331,7 @@ export default {
       this.callData = data.data;
     },
     // 回复信息
-    async handleCall(voId,id,num) {
+    async handleCall(voId, id, num) {
       let version =
         window.getVersion().type +
         "---V" +
@@ -298,8 +346,8 @@ export default {
       };
       const res = await this.$axios.post("createCall", data);
       this.callData = res.data.data;
-      const update = await this.$axios.get(`updateVcm/${id}-${num+1}`);
-      console.log(update)
+      const update = await this.$axios.get(`updateVcm/${id}-${num + 1}`);
+      console.log(update);
     },
     handlecallName(name) {
       this.isShowCall = false;

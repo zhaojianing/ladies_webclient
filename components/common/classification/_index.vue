@@ -40,7 +40,9 @@ export default {
   height: auto;
   border-radius: 10px;
   color: font_color;
-
+  .el-icon-menu {
+    color: about_zuobiaofill;  
+  }
   h3 {
     border-bottom: 1px solid font_color;
     padding-bottom: 4px;
