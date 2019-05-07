@@ -6,7 +6,11 @@
       </el-col>
       <el-col class="container-col" :xs="24" :sm="12" :md="14" :lg="14" :xl="10">
         <!-- 文章部分 -->
-        <div class="font_color details container-bg leaft-style" v-highlight v-html="$md.render(model)"></div>
+        <div
+          class="font_color details container-bg leaft-style"
+          v-highlight
+          v-html="$md.render(model)"
+        ></div>
         <!-- 发表评论部分 -->
         <div class="font_color container-bg leaft-style vcmContainer">
           <div class="cvmBtn">
@@ -16,7 +20,7 @@
           <el-input placeholder="阁下尊姓大名(必填)" v-model="vcmName" autocomplete="on">
             <template slot="prepend">江湖名号:</template>
           </el-input>
-          <el-input placeholder="阁下Email(选填)" v-model="vcmEmail" autocomplete="on">
+          <el-input placeholder="阁下Email(必填)" v-model="vcmEmail" autocomplete="on">
             <template slot="prepend">江湖邮箱:</template>
           </el-input>
           <el-input placeholder="阁下博客(选填)" v-model="vcmUrl" autocomplete="on">
@@ -67,7 +71,7 @@
                   <div class="vamTextRight">
                     <div class="vamCall" title="记得在上方发表留言处  留下邮箱，否则马车要赶好几天才能赶到洛阳">
                       <i class="el-icon-message"></i>
-                      <span @click="handlecallName(call.name)">回复</span>
+                      <span @click="handlecallName(call.name,call.id)">回复</span>
                     </div>
                     <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;留言来自: {{call.getv}}</span>
                   </div>
@@ -91,7 +95,7 @@
                   <el-input placeholder="阁下尊姓大名(必填)" v-model="vcmName" autocomplete="on">
                     <template slot="prepend">江湖名号:</template>
                   </el-input>
-                  <el-input placeholder="阁下Email(选填)" v-model="vcmEmail" autocomplete="on">
+                  <el-input placeholder="阁下Email(必填)" v-model="vcmEmail" autocomplete="on">
                     <template slot="prepend">江湖邮箱:</template>
                   </el-input>
                   <el-input placeholder="阁下博客(选填)" v-model="vcmUrl" autocomplete="on">
@@ -163,7 +167,8 @@ export default {
       callData: [], // 返回内容
       callget: {}, // 回复信息数据
       isShowCall: false, // 是否显示回复信息@
-      totalLength: 0 // 回复总数
+      totalLength: 0, // 回复总数
+      callId: 0,  // 二次回复id
     };
   },
   created() {
@@ -242,6 +247,13 @@ export default {
       } else if (this.vcmMessage === "") {
         this.$message({
           message: "还请阁下高见，鄙人在次等候多时了!",
+          center: true
+        });
+        this.cvmLoding = false;
+        return;
+      }  else if (this.vcmEmail === "") {
+        this.$message({
+          message: "邮箱为必填项哦~~~",
           center: true
         });
         this.cvmLoding = false;
@@ -332,29 +344,91 @@ export default {
     },
     // 回复信息
     async handleCall(voId, id, num) {
-      let version =
-        window.getVersion().type +
-        "---V" +
-        window.getVersion().version.split(".")[0];
-      let data = {
-        img: this.imgUrl,
-        vo_id: voId,
-        name: this.vcmName,
-        vo_name: this.callget.flag ? this.callget.twoname : this.callget.name,
-        comments: this.callvcmMessage,
-        getv: version
-      };
-      const res = await this.$axios.post("createCall", data);
-      this.callData = res.data.data;
-      const update = await this.$axios.get(`updateVcm/${id}-${num + 1}`);
-      console.log(update);
+      if (this.vcmName === "") {
+        this.$message({
+          message: "行走江湖，阁下留个名字呗",
+          center: true
+        });
+        this.cvmLoding = false;
+        return;
+      } else if (this.callvcmMessage === "") {
+        this.$message({
+          message: "还请阁下高见，鄙人在次等候多时了!",
+          center: true
+        });
+        this.cvmLoding = false;
+        return;
+      }  else if (this.vcmEmail === "") {
+        this.$message({
+          message: "邮箱为必填项哦~~~",
+          center: true
+        });
+        this.cvmLoding = false;
+        return;
+      } else {
+        if (process.browser) {
+          localStorage.name = this.vcmName;
+          localStorage.vcmEmail = this.vcmEmail;
+          localStorage.vcmUrl = this.vcmUrl;
+        }
+
+        // 添加评论操作
+        ///(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)
+        let version;
+        if (/(iPhone)/i.test(navigator.userAgent)) { //移动端
+            //TODO
+            version = 'iPhone';
+        } else if (/(iPad)/i.test(navigator.userAgent)) {
+            version = 'iPad';
+        } else if (/(iOS)/i.test(navigator.userAgent)) {
+            version = 'iOS';
+        } else if (/(Android)/i.test(navigator.userAgent)) {
+          version = 'Android';
+        }else {
+          version =window.getVersion().type +"---V" +window.getVersion().version.split(".")[0];
+          
+          let data;
+          debugger
+          if (this.isShowCall) {
+            const callEmailData = await this.$axios.get("getCallEmail/"+this.callId);
+            data = {
+              img: this.imgUrl,
+              vo_id: voId,
+              vcmEmail: this.vcmEmail,
+              vo_email: callEmailData.data.data[0].vcmEmail,
+              name: this.vcmName,
+              vo_name: this.callget.flag ? this.callget.twoname : this.callget.name,
+              comments: this.callvcmMessage,
+              getv: version
+            };
+          } else {
+            const emailData = await this.$axios.get("getEmail/"+voId);
+            data = {
+              img: this.imgUrl,
+              vo_id: voId,
+              vcmEmail: this.vcmEmail,
+              vo_email: emailData.data.data[0].email,
+              name: this.vcmName,
+              vo_name: this.callget.flag ? this.callget.twoname : this.callget.name,
+              comments: this.callvcmMessage,
+              getv: version
+            };
+          }
+          
+          const res = await this.$axios.post("createCall", data);
+          this.callData = res.data.data;
+          const update = await this.$axios.get(`updateVcm/${id}-${num + 1}`);
+        }
+      }
     },
-    handlecallName(name) {
+    handlecallName(name,id) {
+      this.callId = id;
       this.isShowCall = false;
       this.callget.twoname = "";
       this.isShowCall = true;
       this.callget.twoname = name;
       this.callget.flag = true;
+      console.log(id,this.isShowCall)
     }
   }
 };

@@ -16,7 +16,7 @@
           <el-input placeholder="阁下尊姓大名(必填)" v-model="vcmName" autocomplete="on">
             <template slot="prepend">江湖名号:</template>
           </el-input>
-          <el-input placeholder="阁下Email(选填)" v-model="vcmEmail" autocomplete="on">
+          <el-input placeholder="阁下Email(必填)" v-model="vcmEmail" autocomplete="on">
             <template slot="prepend">江湖邮箱:</template>
           </el-input>
           <el-input placeholder="阁下博客(选填)" v-model="vcmUrl" autocomplete="on">
@@ -95,7 +95,14 @@ export default {
         });
         this.cvmLoding = false;
         return;
-      } else {
+      }  else if (this.vcmEmail === "") {
+        this.$message({
+          message: "邮箱为必填项哦~~~",
+          center: true
+        });
+        this.cvmLoding = false;
+        return;
+      }  else {
         if (process.browser) {
           localStorage.name = this.vcmName;
           localStorage.vcmEmail = this.vcmEmail;

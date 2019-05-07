@@ -3,7 +3,7 @@
     <el-row :gutter="20">
       <div class="notice">
         <i class="icon-ziyuan iconfont font-size"></i>
-        <span>： 地球之所以是圆的，是因为上帝想让那些走失或者迷路的人能够重新相遇。</span>
+        <span>： 全站开通邮箱回复功能。</span>
       </div>
       <el-col :xs="0" :sm="1" :md="1" :lg="4" :xl="5">
         <div>&nbsp;</div>
