@@ -14,7 +14,6 @@ $ yarn install
 $ yarn run dev
 
 
-// 以下大家应该用不到
 # build for production and launch server
 $ yarn run build
 $ yarn start
