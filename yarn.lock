@@ -3834,6 +3834,11 @@ fs.realpath@^1.0.0:
   resolved "http://registry.npm.taobao.org/fs.realpath/download/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
   integrity sha1-FQStJSMVjKpA20onh8sBQRmU6k8=
 
+fs@0.0.1-security:
+  version "0.0.1-security"
+  resolved "https://registry.yarnpkg.com/fs/-/fs-0.0.1-security.tgz#8a7bd37186b6dddf3813f23858b57ecaaf5e41d4"
+  integrity sha1-invTcYa23d84E/I4WLV+yq9eQdQ=
+
 fsevents@^1.2.7:
   version "1.2.7"
   resolved "http://registry.npm.taobao.org/fsevents/download/fsevents-1.2.7.tgz#4851b664a3783e52003b3c66eb0eee1074933aa4"
@@ -4112,6 +4117,11 @@ highlight.js@^9.12.0:
   version "9.15.6"
   resolved "http://registry.npm.taobao.org/highlight.js/download/highlight.js-9.15.6.tgz#72d4d8d779ec066af9a17cb14360c3def0aa57c4"
   integrity sha1-ctTY13nsBmr5oXyxQ2DD3vCqV8Q=
+
+highlight.js@^9.15.6:
+  version "9.18.3"
+  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.18.3.tgz#a1a0a2028d5e3149e2380f8a865ee8516703d634"
+  integrity sha512-zBZAmhSupHIl5sITeMqIJnYCDfAEc3Gdkqj65wC1lpI468MMQeeQkhcIAvk+RylAkxrCcI9xy9piHiXeQ1BdzQ==
 
 hmac-drbg@^1.0.0:
   version "1.0.1"
@@ -5828,9 +5838,9 @@ node-cache@^4.1.1:
     lodash "4.x"
 
 node-fetch@^2.3.0:
-  version "2.3.0"
-  resolved "http://registry.npm.taobao.org/node-fetch/download/node-fetch-2.3.0.tgz#1a1d940bbfb916a1d3e0219f037e89e71f8c5fa5"
-  integrity sha1-Gh2UC7+5FqHT4CGfA36J5x+MX6U=
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
+  integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
 
 node-int64@^0.4.0:
   version "0.4.0"
