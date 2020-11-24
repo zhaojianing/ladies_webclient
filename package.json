@@ -22,7 +22,7 @@
     "cross-env": "^5.2.0",
     "element-ui": "^2.4.11",
     "fs": "0.0.1-security",
-    "highlight.js": "^9.15.6",
+    "highlight.js": "^10.1.2",
     "nuxt": "^2.4.0"
   },
   "devDependencies": {
